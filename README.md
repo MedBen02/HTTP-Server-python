@@ -143,7 +143,7 @@ This project is:
 
 ---
 
-## 🚀 Ideas for Next Levels
+## 🚀 Ideas for Next Levels (might get back to it later)
 
 * ✅ Save form data to `.txt` or `.json`
 * ✅ Add session tracking using cookies
