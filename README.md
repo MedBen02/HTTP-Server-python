@@ -12,6 +12,7 @@ The goal: to deeply understand **HTTP**, **sockets**, and how real web servers w
 ```
 
 .
+├── level0/   # Simplest possible HTTP server: 1 file, 1 connection
 ├── level1/   # Basic HTTP server: handle requests, respond manually
 ├── level2/   # Multi-client support with threads + cleaner routing
 ├── level3/   # Routing system + static file serving (HTML, CSS)
@@ -22,6 +23,51 @@ The goal: to deeply understand **HTTP**, **sockets**, and how real web servers w
 ---
 
 ## 🧩 Level-by-Level Overview
+
+---
+
+### 🟣 Level 0 — The Bare Minimum Server
+
+📄 `level0/server.py`
+
+> This is the absolute simplest HTTP server you can write in Python.
+
+- Listens on `localhost:9000`
+- Accepts only one connection at a time
+- Reads the HTTP request and prints it
+- Responds with hardcoded HTML (`<h1>Hello from scratch!</h1>`)
+- No error handling, no routing, no file serving — just pure socket logic
+
+**Key code:**
+
+```python
+from socket import *
+
+server_socket = socket(AF_INET, SOCK_STREAM)
+try:
+    server_socket.bind(('localhost', 9000))
+    server_socket.listen(50)
+
+    while True:
+        client_connection, address = server_socket.accept()
+        request = client_connection.recv(5000).decode()
+        print("\n--- Request Received ---")
+        print(request)
+
+        response = (
+            "HTTP/1.1 200 OK\r\n"
+            "Content-Type: text/html\r\n"
+            "\r\n"
+            "<html><body><h1>Hello from scratch!</h1></body></html>"
+        )
+        client_connection.sendall(response.encode())
+        client_connection.close()
+except KeyboardInterrupt:
+    print("\nShutting down the server...")
+    server_socket.close()
+````
+
+---
 
 ### 🟢 Level 1 — Minimal HTTP Server
 
