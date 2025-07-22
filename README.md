@@ -171,7 +171,7 @@ def contact_submit(form_data):
 Each level can be run separately:
 
 ```bash
-cd level1  # or level2, level3, level4
+cd level_1-..  # or level_2, level_3, level_4
 python server.py
 ```
 
